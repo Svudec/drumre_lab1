@@ -19,10 +19,10 @@ public class UserServiceImpl implements UserService{
     public User saveUserIfNotExists(OAuth2User authUser) {
         String userId = authUser.getAttribute("id");
         User user = new User();
+        user.setId(userId);
+        user.setEmail(authUser.getAttribute("email"));
+        user.setName(authUser.getAttribute("name"));
         if(!userRepo.existsById(userId)){
-            user.setId(userId);
-            user.setEmail(authUser.getAttribute("email"));
-            user.setName(authUser.getAttribute("name"));
             userRepo.save(user);
         }
         return user;
