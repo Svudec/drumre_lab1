@@ -1,5 +1,8 @@
 package hr.unizg.fer.karlo_sudec.Labos1.auth;
 
+import hr.unizg.fer.karlo_sudec.Labos1.user.entity.User;
+import hr.unizg.fer.karlo_sudec.Labos1.user.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -12,10 +15,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/")
+@AllArgsConstructor
 public class AuthController {
 
+    private final UserService userService;
+
     @GetMapping
-    public Map<String, Object> login(@AuthenticationPrincipal OAuth2User principal) {
-        return Collections.singletonMap("name", principal.getAttribute("name"));
+    public User login(@AuthenticationPrincipal OAuth2User principal) {
+        return userService.saveUserIfNotExists(principal);
     }
 }
