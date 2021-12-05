@@ -7,6 +7,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import static javax.swing.text.html.FormSubmitEvent.MethodType.GET;
+
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -15,12 +19,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http    .requiresChannel(channel ->
                     channel.anyRequest().requiresSecure())
-                .authorizeRequests(a -> a
-                        .anyRequest().authenticated()
-                )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
-                .oauth2Login();
+                .authorizeRequests().antMatchers("/login", "/css/**", "/webjars/**", "/logout").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .oauth2Login() // enable OAuth2
+                .loginPage("/login").defaultSuccessUrl("/user")
+                .and()
+                .logout()
+                    .logoutSuccessUrl("/user")
+                    .deleteCookies("JSESSIONID").invalidateHttpSession(true)
+                .and()
+                .csrf().disable();
     }
 }
