@@ -23,5 +23,12 @@
         </table>
     </form>
 </div>
+
+<div th:fragment="weatherSongs" class="align-center-noFlex">
+    <h2 th:text="'Weather in ' + ${city.getName()} + ' is:'"></h2> <br>
+
+    <h4 th:text="${weather.getMain()}"></h4>
+    <h6 th:text="${weather.getDescription()}"></h6>
+</div>
 </body>
 </html>

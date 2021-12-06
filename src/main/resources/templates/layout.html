@@ -8,6 +8,7 @@
     <title>Weather Songifier</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
 </head>
 <body>
 <div class="d-flex" id="wrapper">
@@ -15,7 +16,7 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light">Weather Songifier</div>
         <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Home</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/">Home</a>
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -38,7 +39,7 @@
             </div>
         </nav>
         <!-- Page content-->
-        <div th:insert="fragments/content :: home" id="content"></div>
+        <div th:insert="fragments/content :: ${contentName}" id="content"></div>
     </div>
 </div>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

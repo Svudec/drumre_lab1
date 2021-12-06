@@ -23,10 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login() // enable OAuth2
-                .loginPage("/login").defaultSuccessUrl("/user")
+                .loginPage("/login").defaultSuccessUrl("/")
                 .and()
                 .logout()
-                    .logoutSuccessUrl("/user")
+                    .logoutSuccessUrl("/")
                     .deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 .and()
                 .csrf().disable();

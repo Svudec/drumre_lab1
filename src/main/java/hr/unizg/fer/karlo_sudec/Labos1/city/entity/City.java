@@ -8,9 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class City {
     @Id
-    private Long id;
+    private String id;
 
     private String name;
 
     private String country;
+
+    public void overrideId(){
+        id = country.toLowerCase() + "-" + name.toLowerCase();
+    }
 }
