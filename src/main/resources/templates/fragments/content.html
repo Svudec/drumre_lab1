@@ -1,7 +1,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="home">
-    This is home
+    <form action="#" th:action="@{/weather/get}" th:object="${city}" method="post">
+        <table>
+            <tr>
+                <td><label>Choose country: </label></td>
+                <td>
+                    <select th:field="*{country}">
+                        <option th:each="country: ${countries}"
+                                th:value="${country.getAlpha2()}"
+                                th:text="${country.getName()}"/>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>City: </label></td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Get songs"/></td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>
