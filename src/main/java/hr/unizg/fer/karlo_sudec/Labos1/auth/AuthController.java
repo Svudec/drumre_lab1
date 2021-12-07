@@ -35,6 +35,7 @@ public class AuthController {
         model.addAttribute("countries", Arrays.stream(CountryCode.values())
                 .filter(code -> code.getAssignment() == CountryCode.Assignment.OFFICIALLY_ASSIGNED)
                 .sorted(Comparator.comparing(CountryCode::getName)).toArray());
+
         model.addAttribute("contentName", "home");
         return "layout";
     }

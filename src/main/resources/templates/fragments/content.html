@@ -1,6 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="home">
+<div th:fragment="home" class="m-2">
+    <h2 th:if="${cityNotFound}" th:text="'City with name: ' + ${cityNotFound} + ' not found!'"></h2>
     <form action="#" th:action="@{/weather/get}" th:object="${city}" method="post">
         <table>
             <tr>
@@ -24,11 +25,33 @@
     </form>
 </div>
 
-<div th:fragment="weatherSongs" class="align-center-noFlex">
-    <h2 th:text="'Weather in ' + ${city.getName()} + ' is:'"></h2> <br>
+<div th:fragment="weatherSongs">
+    <div class="align-center-noFlex mb-4">
+        <h2 th:text="'Weather in ' + ${city.getName()} + ' is:'"></h2> <br>
 
-    <h4 th:text="${weather.getMain()}"></h4>
-    <h6 th:text="${weather.getDescription()}"></h6>
+        <h4 th:text="${weather.getMain()}"></h4>
+        <h6 th:text="${weather.getDescription()}"></h6>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:each="song : ${songs}" class="col mb-3">
+                <a th:href="${song.getUrl()}" th:target="_blank">
+                    <div class='music-card'>
+                        <div class='image'>
+                            <img src='https://play-lh.googleusercontent.com/dvUzAiVtBpONl6OWLKdH8-s0BHqQD_3SCz3FyYrvnQOlgddoJXMs0BDz5wLXpTGRt7Cq=w300-rw'>
+                        </div>
+                        <div class='wave'></div>
+                        <div class='wave'></div>
+                        <div class='wave'></div>
+                        <div class='info'>
+                            <h2 th:text="${song.getName()}" class='title'></h2>
+                            <author th:text="${song.getArtist()}"class='artist'></author>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

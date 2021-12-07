@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -36,13 +37,12 @@ public class WeatherServiceImpl implements WeatherService{
         String WeatherApiUrl
                 = "https://api.openweathermap.org/data/2.5/weather?q=" + city.getName() + "," +
                     city.getCountry() + "&appid=" + weatherApiKey;
-        ResponseEntity<String> response
-                = restTemplate.getForEntity(WeatherApiUrl, String.class);
         try {
+            ResponseEntity<String> response = restTemplate.getForEntity(WeatherApiUrl, String.class);
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
             Weather[] weathers = objectMapper.treeToValue(jsonNode.get("weather"), Weather[].class);
             saveWeathersIfNotExists(weathers);
-            cityService.saveCityIfNotExists(city);
+            cityService.updateWeatherForCity(weathers[0], city);
             return weathers[0];
         } catch (JsonProcessingException e) {
             return null;
